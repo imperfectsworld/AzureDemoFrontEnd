@@ -1,9 +1,26 @@
-<h1>Add Post</h1>
+@if (!loggedIn) {
+  <!-- Custom component that handles log in -->
+  <asl-google-signin-button></asl-google-signin-button>
+}
+@else {
+  <!-- calls our log out method -->
+  <button class="btn btn-outline-dark" (click)="signOut()">
+    Sign Out
+  </button>
+}
+@if(loggedIn) {
+<h1>Post as {{googleUser.name}}</h1>
 <input type="text" [(ngModel)]="formPost.content" />
 <button (click)="addPost()">Post</button> 
+}
 
+@else {
+  <h3>Login to post</h3>
+}
 
 <h1>All Posts</h1>
 @for(p of allPosts; track p.id){
+  <img [src]="p.google.pfp" height="50px" />
   <p>{{p.google.userName}}: {{p.content}}</p>
 }
+
